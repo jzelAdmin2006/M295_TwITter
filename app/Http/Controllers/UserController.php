@@ -10,12 +10,6 @@ class UserController extends Controller
 {
     public function show($id)
     {
-        $user = User::find($id);
-        $user = [
-            'id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email,
-        ];
-        return UserResource::make($user);
+        return UserResource::make(User::find($id));
     }
 }

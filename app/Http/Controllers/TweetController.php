@@ -10,14 +10,6 @@ class TweetController extends Controller
 {
     public function index()
     {
-        $tweets = Tweet::latest()->take(100)->get();
-        $tweets = $tweets->map(function ($tweet) {
-            $tweet->user = [
-                "id" => $tweet->user_id,
-                "name" => $tweet->user->name,
-            ];
-            return $tweet;
-        });
-        return TweetResource::collection($tweets);
+        return TweetResource::collection(Tweet::latest()->take(100)->get());
     }
 }
