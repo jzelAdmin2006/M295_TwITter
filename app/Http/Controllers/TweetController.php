@@ -10,6 +10,13 @@ class TweetController extends Controller
 {
     public function index()
     {
-        return TweetResource::collection(Tweet::all());
+        $tweets = Tweet::all();
+        $tweets = $tweets->map(function ($tweet) {
+            $tweet->user = [
+                "name" => "Franzi Musterfrau"
+            ];
+            return $tweet;
+        });
+        return TweetResource::collection($tweets);
     }
 }
