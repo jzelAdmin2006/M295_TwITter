@@ -16,11 +16,10 @@ class TweetResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "user" => [
-                "id" => $this->user_id,
-                "name" => $this->user->name,
-            ],
-            "created_at" => $this->created_at->format('d.m.Y'),
+            "text" => $this->text,
+            "likes" => $this->likes,
+            "created_at" => $this->created_at->toIso8601String(),
+            "user" => new UserResource($this->user),
         ];
     }
 }
