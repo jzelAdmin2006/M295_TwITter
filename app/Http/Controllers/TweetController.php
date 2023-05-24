@@ -13,8 +13,8 @@ class TweetController extends Controller
         $tweets = Tweet::latest()->take(100)->get();
         $tweets = $tweets->map(function ($tweet) {
             $tweet->user = [
-                "id" => 1,
-                "name" => "Franzi Musterfrau"
+                "id" => $tweet->user_id,
+                "name" => $tweet->user->name,
             ];
             return $tweet;
         });
