@@ -1,0 +1,12 @@
+name: modul-295-twitter
+recipe: laravel
+config:
+  webroot: public
+  php: 8.1
+services:
+  appserver:
+    run:
+      - cp -n .env.example .env
+      - composer install
+  database:
+    portforward: 3306
