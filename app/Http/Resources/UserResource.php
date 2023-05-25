@@ -20,6 +20,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'is_verified' => $this->is_verified,
             'created_at' => $this->created_at->format('d.m.Y'),
+            'tweets_count' => $this->tweets_count,
         ];
     }
 }

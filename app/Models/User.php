@@ -42,8 +42,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected $appends = ['is_verified'];
-
     public function tweets()
     {
         return $this->hasMany(Tweet::class);
@@ -51,7 +49,16 @@ class User extends Authenticatable
 
     public function getIsVerifiedAttribute()
     {
-        $tweets = $this->relationLoaded('tweets') ? $this->tweets : $this->tweets();
-        return $tweets->sum('likes') >= 100000;
+        return $this->getTweets()->sum('likes') >= 100000;
+    }
+
+    public function getTweetsCountAttribute()
+    {
+        return $this->getTweets()->count();
+    }
+
+    private function getTweets()
+    {
+        return $this->tweets ?? $this->tweets();
     }
 }

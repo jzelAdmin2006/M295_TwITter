@@ -11,7 +11,14 @@ class TweetController extends Controller
 {
     public function index()
     {
-        return TweetResource::collection(Tweet::with(['user', 'user.tweets'])->latest()->take(100)->get());
+        return TweetResource::collection(
+            Tweet::with([
+                'user' => function ($query) {
+                    $query->withCount('tweets');
+                },
+                'user.tweets'
+            ])->latest()->take(100)->get()
+        );
     }
 
     public function show(Tweet $tweet)

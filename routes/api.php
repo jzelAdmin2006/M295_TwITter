@@ -39,6 +39,7 @@ Route::group(['prefix' => '/me'], function () {
     Route::put('/', [UserController::class, 'updateMe'])->middleware('auth:sanctum');
     Route::delete('/', [UserController::class, 'deleteMe'])->middleware('auth:sanctum');
 });
+Route::get('/tags/top', [UserController::class, 'topTags']);
 
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');

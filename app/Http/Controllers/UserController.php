@@ -48,4 +48,14 @@ class UserController extends Controller
             'message' => 'User deleted'
         ]);
     }
+
+    public function topTags()
+    {
+        $users = User::withCount('tweets')
+            ->orderBy('tweets_count', 'desc')
+            ->limit(3)
+            ->get();
+
+        return UserResource::collection($users);
+    }
 }
