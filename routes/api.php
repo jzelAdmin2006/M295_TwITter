@@ -34,7 +34,10 @@ Route::group(['prefix' => '/users'], function () {
     Route::get('/{user}', [$controller, 'show']);
     Route::get('/{user}/tweets', [$controller, 'tweets']);
 });
-Route::get('/me', [UserController::class, 'me'])->middleware('auth:sanctum');
+Route::group(['prefix' => '/me'], function () {
+    Route::get('/', [UserController::class, 'me'])->middleware('auth:sanctum');
+    Route::put('/', [UserController::class, 'updateMe'])->middleware('auth:sanctum');
+});
 
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
