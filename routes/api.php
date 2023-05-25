@@ -37,6 +37,7 @@ Route::group(['prefix' => '/users'], function () {
 Route::group(['prefix' => '/me'], function () {
     Route::get('/', [UserController::class, 'me'])->middleware('auth:sanctum');
     Route::put('/', [UserController::class, 'updateMe'])->middleware('auth:sanctum');
+    Route::delete('/', [UserController::class, 'deleteMe'])->middleware('auth:sanctum');
 });
 
 Route::post('/login', [LoginController::class, 'login']);

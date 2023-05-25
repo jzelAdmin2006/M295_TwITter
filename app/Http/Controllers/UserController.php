@@ -40,4 +40,12 @@ class UserController extends Controller
 
         return UserResource::make($user);
     }
+
+    public function deleteMe(Request $request)
+    {
+        $request->user()->delete();
+        return response()->json([
+            'message' => 'User deleted'
+        ]);
+    }
 }
