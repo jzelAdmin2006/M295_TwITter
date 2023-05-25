@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,5 +17,10 @@ class LoginController extends Controller
                 'errors' => ['general' => 'E-Mail oder Passwort falsch.']
             ], 422);
         }
+    }
+
+    public function checkAuth(Request $request)
+    {
+        return UserResource::make($request->user());
     }
 }

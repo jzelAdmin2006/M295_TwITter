@@ -15,5 +15,9 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory()->count(60)->has(Tweet::factory()->count(50))->create();
+        User::first()->update([
+            'email' => 'user@example.com',
+            'password' => bcrypt(getenv('EXAMPLE_USER_PASSWORD'))
+        ]);
     }
 }
