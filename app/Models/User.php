@@ -42,8 +42,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = ['is_verified'];
+
     public function tweets()
     {
         return $this->hasMany(Tweet::class);
+    }
+
+    public function getIsVerifiedAttribute()
+    {
+        return $this->tweets()->sum('likes') >= 100000;
     }
 }
