@@ -28,4 +28,5 @@ Route::group(['prefix' => '/users'], function () {
     Route::get('/{id}/tweets', [$controller, 'tweets']);
 });
 Route::post('/login', [LoginController::class, 'login']);
+Route::get('/logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
 Route::get('/auth', [LoginController::class, 'checkAuth'])->middleware('auth:sanctum');
