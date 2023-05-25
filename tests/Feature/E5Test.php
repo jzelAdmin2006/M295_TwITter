@@ -43,5 +43,4 @@ class E5Test extends TestCase
 
         $this->assertEmpty($assertionArray);
     }
-
 }
