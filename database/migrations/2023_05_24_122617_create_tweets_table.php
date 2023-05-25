@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('text', 160)->notNullable();
             $table->integer('likes')->default(0);
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
