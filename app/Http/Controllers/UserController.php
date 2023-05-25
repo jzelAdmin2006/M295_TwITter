@@ -16,6 +16,6 @@ class UserController extends Controller
 
     public function tweets($id)
     {
-        return TweetResource::collection(User::findOrFail($id)->tweets()->latest()->take(10)->get());
+        return TweetResource::collection(User::findOrFail($id)->tweets()->with('user')->latest()->take(10)->get());
     }
 }
