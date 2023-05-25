@@ -13,7 +13,7 @@ class I3Test extends TestCase
 
     protected $seed = true;
 
-    public function test_endpoint_get_tags_top_returns_asserted_json_structure(): void
+    public function test_endpoint_get_users_top_returns_asserted_json_structure(): void
     {
         $response = $this->get('/api/users/top');
 
@@ -32,7 +32,7 @@ class I3Test extends TestCase
         ]);
     }
 
-    public function test_endpoint_get_tags_top_returns_3_users_with_most_tweets(): void
+    public function test_endpoint_get_users_top_returns_3_users_with_most_tweets(): void
     {
         $topUserIds = Tweet::selectRaw('user_id, count(*) as count')
             ->groupBy('user_id')
