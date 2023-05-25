@@ -51,6 +51,7 @@ class User extends Authenticatable
 
     public function getIsVerifiedAttribute()
     {
-        return $this->tweets()->sum('likes') >= 100000;
+        $tweets = $this->relationLoaded('tweets') ? $this->tweets : $this->tweets();
+        return $tweets->sum('likes') >= 100000;
     }
 }
