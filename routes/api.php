@@ -21,12 +21,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/tweets', [TweetController::class, 'index']);
+Route::group(['prefix' => '/tweets'], function () {
+    Route::get('/', [TweetController::class, 'index']);
+    Route::get('/{id}', [TweetController::class, 'show']);
+    Route::post('/{id}/like', [TweetController::class, 'like'])->middleware('auth:sanctum');
+});
+
 Route::group(['prefix' => '/users'], function () {
     $controller = UserController::class;
     Route::get('/{id}', [$controller, 'show']);
     Route::get('/{id}/tweets', [$controller, 'tweets']);
 });
+
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
 Route::get('/auth', [LoginController::class, 'checkAuth'])->middleware('auth:sanctum');
