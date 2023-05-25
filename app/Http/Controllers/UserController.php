@@ -11,11 +11,11 @@ class UserController extends Controller
 {
     public function show($id)
     {
-        return UserResource::make(User::find($id));
+        return UserResource::make(User::findOrFail($id));
     }
 
     public function tweets($id)
     {
-        return TweetResource::collection(User::find($id)->tweets()->latest()->take(10)->get());
+        return TweetResource::collection(User::findOrFail($id)->tweets()->latest()->take(10)->get());
     }
 }
