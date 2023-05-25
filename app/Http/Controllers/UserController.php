@@ -9,13 +9,13 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function show($id)
+    public function show(User $user)
     {
-        return UserResource::make(User::findOrFail($id));
+        return UserResource::make($user);
     }
 
-    public function tweets($id)
+    public function tweets(User $user)
     {
-        return TweetResource::collection(User::findOrFail($id)->tweets()->with('user')->latest()->take(10)->get());
+        return TweetResource::collection($user->tweets()->with('user')->latest()->take(10)->get());
     }
 }

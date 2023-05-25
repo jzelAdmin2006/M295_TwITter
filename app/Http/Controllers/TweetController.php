@@ -13,14 +13,13 @@ class TweetController extends Controller
         return TweetResource::collection(Tweet::with(['user', 'user.tweets'])->latest()->take(100)->get());
     }
 
-    public function show($id)
+    public function show($tweet)
     {
-        return TweetResource::make(Tweet::findOrFail($id));
+        return $tweet;
     }
 
-    public function like(Request $request, $id)
+    public function like(Request $request, Tweet $tweet)
     {
-        $tweet = Tweet::findOrFail($id);
         $tweet->likes++;
         $tweet->save();
         return TweetResource::make($tweet);
