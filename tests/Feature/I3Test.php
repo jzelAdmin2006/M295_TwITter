@@ -15,7 +15,7 @@ class I3Test extends TestCase
 
     public function test_endpoint_get_tags_top_returns_asserted_json_structure(): void
     {
-        $response = $this->get('/api/tags/top');
+        $response = $this->get('/api/users/top');
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
@@ -41,7 +41,7 @@ class I3Test extends TestCase
             ->pluck('user_id')
             ->toArray();
 
-        $response = $this->get('/api/tags/top');
+        $response = $this->get('/api/users/top');
 
         $response->assertStatus(200);
         $response->assertJson([

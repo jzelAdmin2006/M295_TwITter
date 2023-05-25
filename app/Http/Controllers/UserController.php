@@ -49,7 +49,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function topTags()
+    public function topUsers()
     {
         $users = User::withCount('tweets')
             ->orderBy('tweets_count', 'desc')

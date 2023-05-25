@@ -31,15 +31,17 @@ Route::group(['prefix' => '/tweets'], function () {
 
 Route::group(['prefix' => '/users'], function () {
     $controller = UserController::class;
+    Route::get('/top', [$controller, 'topUsers']);
     Route::get('/{user}', [$controller, 'show']);
     Route::get('/{user}/tweets', [$controller, 'tweets']);
 });
+
+
 Route::group(['prefix' => '/me'], function () {
     Route::get('/', [UserController::class, 'me'])->middleware('auth:sanctum');
     Route::put('/', [UserController::class, 'updateMe'])->middleware('auth:sanctum');
     Route::delete('/', [UserController::class, 'deleteMe'])->middleware('auth:sanctum');
 });
-Route::get('/tags/top', [UserController::class, 'topTags']);
 
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
