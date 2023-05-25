@@ -17,6 +17,7 @@ class G1Test extends TestCase
         $user = Sanctum::actingAs(User::factory()->create());
         $tweet = $user->tweets()->create(Tweet::factory()->make(['likes' => 0])->toArray());
 
+        Sanctum::actingAs(User::factory()->create());
         $this->postJson('/api/tweets/' . $tweet->id . '/like');
 
 

@@ -30,8 +30,14 @@ class TweetController extends Controller
 
     public function like(Request $request, Tweet $tweet)
     {
-        $tweet->likes++;
-        $tweet->save();
-        return TweetResource::make($tweet);
+        if ($request->user()->id === $tweet->user_id) {
+            return response()->json([
+                'message' => 'You cannot like your own tweet.'
+            ], 409);
+        } else {
+            $tweet->likes++;
+            $tweet->save();
+            return TweetResource::make($tweet);
+        }
     }
 }
