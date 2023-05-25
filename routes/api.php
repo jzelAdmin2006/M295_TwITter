@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['prefix' => '/tweets'], function () {
     Route::get('/', [TweetController::class, 'index']);
     Route::get('/{tweet}', [TweetController::class, 'show']);
+    Route::post('/', [TweetController::class, 'store'])->middleware('auth:sanctum');
     Route::post('/{tweet}/like', [TweetController::class, 'like'])->middleware('auth:sanctum');
 });
 

@@ -18,6 +18,15 @@ class TweetController extends Controller
         return TweetResource::make($tweet);
     }
 
+    public function store(Request $request)
+    {
+        $tweet = new Tweet();
+        $tweet->text = $request->text;
+        $tweet->user_id = $request->user()->id;
+        $tweet->save();
+        return TweetResource::make($tweet);
+    }
+
     public function like(Request $request, Tweet $tweet)
     {
         $tweet->likes++;
