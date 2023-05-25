@@ -18,4 +18,9 @@ class UserController extends Controller
     {
         return TweetResource::collection($user->tweets()->with('user')->latest()->take(10)->get());
     }
+
+    public function me(Request $request)
+    {
+        return UserResource::make($request->user());
+    }
 }

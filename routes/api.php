@@ -22,10 +22,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix' => '/tweets'], function () {
-    Route::get('/', [TweetController::class, 'index']);
-    Route::get('/{tweet}', [TweetController::class, 'show']);
-    Route::post('/', [TweetController::class, 'store'])->middleware('auth:sanctum');
-    Route::post('/{tweet}/like', [TweetController::class, 'like'])->middleware('auth:sanctum');
+    $controller = TweetController::class;
+    Route::get('/', [$controller, 'index']);
+    Route::get('/{tweet}', [$controller, 'show']);
+    Route::post('/', [$controller, 'store'])->middleware('auth:sanctum');
+    Route::post('/{tweet}/like', [$controller, 'like'])->middleware('auth:sanctum');
 });
 
 Route::group(['prefix' => '/users'], function () {
@@ -33,6 +34,7 @@ Route::group(['prefix' => '/users'], function () {
     Route::get('/{user}', [$controller, 'show']);
     Route::get('/{user}/tweets', [$controller, 'tweets']);
 });
+Route::get('/me', [UserController::class, 'me'])->middleware('auth:sanctum');
 
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
