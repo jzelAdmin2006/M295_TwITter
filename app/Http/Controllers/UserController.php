@@ -58,4 +58,13 @@ class UserController extends Controller
 
         return UserResource::collection($users);
     }
+
+    public function newUsers()
+    {
+        $users = User::orderBy('created_at', 'desc')
+            ->limit(3)
+            ->get();
+
+        return UserResource::collection($users);
+    }
 }

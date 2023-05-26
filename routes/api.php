@@ -32,6 +32,7 @@ Route::group(['prefix' => '/tweets'], function () {
 Route::group(['prefix' => '/users'], function () {
     $controller = UserController::class;
     Route::get('/top', [$controller, 'topUsers']);
+    Route::get('/new', [$controller, 'newUsers']);
     Route::get('/{user}', [$controller, 'show']);
     Route::get('/{user}/tweets', [$controller, 'tweets']);
 });
