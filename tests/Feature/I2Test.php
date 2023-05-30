@@ -5,8 +5,6 @@ namespace Tests\Feature;
 use App\Models\Tweet;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
@@ -16,7 +14,7 @@ class I2Test extends TestCase
     {
         $tweet = $this->createAndLikeOwnTweet();
 
-        $this->assertEquals(0, $tweet->fresh()->likes);
+        $this->assertEquals(0, $tweet->fresh()->likes->count());
     }
 
     public function test_endpoint_post_tweets_id_like_own_tweet_returns_error(): void
@@ -34,7 +32,7 @@ class I2Test extends TestCase
         Model::unguard();
 
         $user = Sanctum::actingAs(User::factory()->create());
-        $tweet = $user->tweets()->create(Tweet::factory()->make(['likes' => 0])->toArray());
+        $tweet = $user->tweets()->create(Tweet::factory()->make()->toArray());
 
         $this->postJson('/api/tweets/' . $tweet->id . '/like');
         return $tweet;

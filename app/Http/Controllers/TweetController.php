@@ -52,8 +52,10 @@ class TweetController extends Controller
                 'message' => 'You cannot like your own tweet.'
             ], 409);
         } else {
-            $tweet->likes++;
-            $tweet->save();
+            if (!$tweet->likes()->where('user_id', $request->user()->id)->exists()) {
+                $tweet->likes()->attach($request->user()->id);
+                $tweet->save();
+            }
             return TweetResource::make($tweet);
         }
     }

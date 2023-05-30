@@ -15,12 +15,11 @@ class G1Test extends TestCase
         Model::unguard();
 
         $user = Sanctum::actingAs(User::factory()->create());
-        $tweet = $user->tweets()->create(Tweet::factory()->make(['likes' => 0])->toArray());
+        $tweet = $user->tweets()->create(Tweet::factory()->make()->toArray());
 
         Sanctum::actingAs(User::factory()->create());
         $this->postJson('/api/tweets/' . $tweet->id . '/like');
 
-
-        $this->assertEquals(1, $tweet->fresh()->likes);
+        $this->assertEquals(1, $tweet->fresh()->likes->count());
     }
 }
