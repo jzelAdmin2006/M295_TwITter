@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTweetRequest;
 use App\Http\Resources\TweetResource;
+use App\Models\Tag;
 use App\Models\Tweet;
 use Illuminate\Http\Request;
 
@@ -32,6 +33,11 @@ class TweetController extends Controller
         $tweet->text = $request->text;
         $tweet->user_id = $request->user()->id;
         $tweet->save();
+        preg_match_all("/#(\w+)/", $request->text, $matches);
+        foreach ($matches[1] as $match) {
+            $tag = Tag::firstOrCreate(['name' => $match]);
+            $tweet->tags()->attach($tag->id);
+        }
         return TweetResource::make($tweet);
     }
 
