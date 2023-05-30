@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\TweetController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -25,6 +26,7 @@ Route::group(['prefix' => '/tweets'], function () {
     $controller = TweetController::class;
     Route::get('/', [$controller, 'index']);
     Route::get('/{tweet}', [$controller, 'show']);
+    Route::get('/{tweet}/related', [$controller, 'related']);
     Route::post('/', [$controller, 'store'])->middleware('auth:sanctum');
     Route::post('/{tweet}/like', [$controller, 'like'])->middleware('auth:sanctum');
 });
@@ -47,3 +49,5 @@ Route::group(['prefix' => '/me'], function () {
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
 Route::get('/auth', [LoginController::class, 'checkAuth'])->middleware('auth:sanctum');
+
+Route::get('/tags/top', [TagController::class, 'top']);
