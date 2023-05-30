@@ -23,6 +23,11 @@ class DatabaseSeeder extends Seeder
                     ->create([
                         'user_id' => $user->id
                     ]);
+                $user->likes()->attach(
+                    Tweet::inRandomOrder()
+                        ->limit(random_int(0, 50))
+                        ->pluck('id')
+                );
             });
         User::first()->update([
             'email' => 'user@example.com',

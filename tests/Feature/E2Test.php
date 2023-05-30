@@ -18,6 +18,6 @@ class E2Test extends TestCase
 
         $this->getJson('/api/tweets');
 
-        $this->assertLessThanOrEqual(3, count(DB::getQueryLog()), 'There is a N+1 problem present, too many queries are executed.');
+        $this->assertLessThanOrEqual(5, count(DB::getQueryLog()), 'There is a N+1 problem present, too many queries are executed.');
     }
 }

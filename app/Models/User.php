@@ -49,7 +49,14 @@ class User extends Authenticatable
 
     public function getIsVerifiedAttribute()
     {
-        return $this->getTweets()->sum('likes') >= 100000;
+        return $this->getSumOfLikes() >= 10000;
+    }
+
+    private function getSumOfLikes()
+    {
+        return $this->getTweets()->sum(function ($tweet) {
+            return $tweet->likes->count();
+        });
     }
 
     public function getTweetsCountAttribute()
@@ -60,5 +67,10 @@ class User extends Authenticatable
     private function getTweets()
     {
         return $this->tweets ?? $this->tweets();
+    }
+
+    public function likes()
+    {
+        return $this->belongsToMany(Tweet::class, 'likes');
     }
 }

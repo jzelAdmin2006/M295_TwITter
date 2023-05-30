@@ -17,7 +17,7 @@ class TweetResource extends JsonResource
         return [
             "id" => $this->id,
             "text" => $this->text,
-            "likes" => $this->likes,
+            "likes" => UserResource::collection($this->likes),
             "created_at" => $this->created_at->toIso8601String(),
             "user" => new UserResource($this->user),
         ];

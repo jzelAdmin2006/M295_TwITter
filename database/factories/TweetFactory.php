@@ -19,7 +19,6 @@ class TweetFactory extends Factory
     {
         return [
             'text' => $this->faker->text(rand(5, 160)),
-            'likes' => $this->faker->numberBetween(0, 20000),
             'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'user_id' => User::all()->random()->id,
         ];

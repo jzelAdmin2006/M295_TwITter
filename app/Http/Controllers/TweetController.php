@@ -16,13 +16,17 @@ class TweetController extends Controller
                 'user' => function ($query) {
                     $query->withCount('tweets');
                 },
-                'user.tweets'
+                'user.tweets',
+                'likes.tweets'
             ])->latest()->take(100)->get()
         );
     }
 
     public function show(Tweet $tweet)
     {
+        $tweet->load([
+            'likes.tweets',
+        ]);
         return TweetResource::make($tweet);
     }
 

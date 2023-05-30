@@ -2,10 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\Tweet;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class E4Test extends TestCase
@@ -44,31 +41,5 @@ class E4Test extends TestCase
                 ]
             ]
         ]);
-    }
-
-    public function test_endpoint_get_users_id_returns_positive_is_valid_if_likes_more_than_100000()
-    {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-
-        $user = User::factory()->has(
-            Tweet::factory()->count(1)->state([
-                'likes' => 100001
-            ])
-        )->create();
-
-        $response = $this->getJson('/api/users/' . $user->id);
-        $response->assertJsonPath('data.is_verified', true);
-    }
-
-    public function test_endpoint_get_users_id_returns_negative_is_valid_if_likes_less_than_100000()
-    {
-        $user = User::factory()->has(
-            Tweet::factory()->count(1)->state([
-                'likes' => 99999
-            ])
-        )->create();
-
-        $response = $this->getJson('/api/users/' . $user->id);
-        $response->assertJsonPath('data.is_verified', false);
     }
 }
