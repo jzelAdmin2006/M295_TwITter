@@ -52,6 +52,7 @@ class UserController extends Controller
     public function topUsers()
     {
         $users = User::withCount('tweets')
+            ->with('tweets')
             ->orderBy('tweets_count', 'desc')
             ->limit(3)
             ->get();
