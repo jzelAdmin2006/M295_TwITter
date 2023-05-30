@@ -50,6 +50,12 @@ class TweetController extends Controller
 
     public function related(Tweet $tweet)
     {
-        return TweetResource::make($tweet);
+        return TweetResource::collection(
+            Tweet::where('user_id', $tweet->user_id)
+                ->where('id', '!=', $tweet->id)
+                ->latest()
+                ->take(20)
+                ->get()
+        );
     }
 }
