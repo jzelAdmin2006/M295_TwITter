@@ -21,4 +21,14 @@ class I5Test extends TestCase
 
         $this->assertLessThanOrEqual(2, count(DB::getQueryLog()), 'There is a N+1 problem present, too many queries are executed.');
     }
+
+    public function test_endpoint_get_users_new_there_is_no_n1_problem(): void
+    {
+
+        DB::enableQueryLog();
+
+        $this->get('/api/users/new');
+
+        $this->assertLessThanOrEqual(2, count(DB::getQueryLog()), 'There is a N+1 problem present, too many queries are executed.');
+    }
 }
