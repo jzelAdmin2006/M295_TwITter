@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\NewUserResource;
 use App\Http\Resources\TweetResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -67,6 +68,6 @@ class UserController extends Controller
             ->limit(3)
             ->get();
 
-        return UserResource::collection($users);
+        return NewUserResource::collection($users);
     }
 }
