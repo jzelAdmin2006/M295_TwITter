@@ -56,12 +56,35 @@ class TweetController extends Controller
 
     public function related(Tweet $tweet)
     {
-        return TweetResource::collection(
-            Tweet::where('user_id', $tweet->user_id)
+        $relatedTweets = Tweet::where('id', '!=', $tweet->id)
+            ->whereHas('tags', function ($query) use ($tweet) {
+                $query->whereIn('name', $tweet->tags->pluck('name'));
+            })
+            ->latest()
+            ->take(20)
+            ->get();
+
+        if ($relatedTweets->count() < 20) {
+            $authorTweets = Tweet::where('user_id', $tweet->user_id)
                 ->where('id', '!=', $tweet->id)
+                ->whereNotIn('id', $relatedTweets->pluck('id'))
                 ->latest()
-                ->take(20)
-                ->get()
-        );
+                ->take(20 - $relatedTweets->count())
+                ->get();
+
+            $relatedTweets = $relatedTweets->concat($authorTweets);
+        }
+
+        if ($relatedTweets->count() < 20) {
+            $randomTweets = Tweet::where('id', '!=', $tweet->id)
+                ->whereNotIn('id', $relatedTweets->pluck('id'))
+                ->inRandomOrder()
+                ->take(20 - $relatedTweets->count())
+                ->get();
+
+            $relatedTweets = $relatedTweets->concat($randomTweets);
+        }
+
+        return TweetResource::collection($relatedTweets);
     }
 }
