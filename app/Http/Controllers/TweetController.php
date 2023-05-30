@@ -47,4 +47,9 @@ class TweetController extends Controller
             return TweetResource::make($tweet);
         }
     }
+
+    public function related(Tweet $tweet)
+    {
+        return TweetResource::make($tweet);
+    }
 }

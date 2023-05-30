@@ -25,6 +25,7 @@ Route::group(['prefix' => '/tweets'], function () {
     $controller = TweetController::class;
     Route::get('/', [$controller, 'index']);
     Route::get('/{tweet}', [$controller, 'show']);
+    Route::get('/{tweet}/related', [$controller, 'related']);
     Route::post('/', [$controller, 'store'])->middleware('auth:sanctum');
     Route::post('/{tweet}/like', [$controller, 'like'])->middleware('auth:sanctum');
 });
